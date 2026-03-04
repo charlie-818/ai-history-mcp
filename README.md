@@ -2,6 +2,7 @@
 
 <div align="center">
 
+[![npm version](https://img.shields.io/npm/v/ai-usage-metrics-mcp?style=for-the-badge&logo=npm)](https://www.npmjs.com/package/ai-usage-metrics-mcp)
 [![MCP Compatible](https://img.shields.io/badge/MCP-Compatible-blue?style=for-the-badge&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0id2hpdGUiIGQ9Ik0xMiAyQzYuNDggMiAyIDYuNDggMiAxMnM0LjQ4IDEwIDEwIDEwIDEwLTQuNDggMTAtMTBTMTcuNTIgMiAxMiAyem0wIDE4Yy00LjQxIDAtOC0zLjU5LTgtOHMzLjU5LTggOC04IDggMy41OSA4IDgtMy41OSA4LTggOHoiLz48L3N2Zz4=)](https://modelcontextprotocol.io/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.3-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 [![Node.js](https://img.shields.io/badge/Node.js-18+-green?style=for-the-badge&logo=node.js)](https://nodejs.org/)
@@ -73,20 +74,26 @@ The server implements the [Model Context Protocol](https://modelcontextprotocol.
 
 ## 🚀 Quick Start
 
-```bash
-# Clone and install
-git clone https://github.com/your-org/ai-usage-metrics-mcp.git
-cd ai-usage-metrics-mcp
-npm install && npm run build
+**No installation required!** Just add the server to your AI platform config:
+
+```json
+{
+  "mcpServers": {
+    "ai-usage-metrics": {
+      "command": "npx",
+      "args": ["-y", "ai-usage-metrics-mcp"]
+    }
+  }
+}
 ```
 
-Then add to your AI platform using the one-click configurations below.
+That's it! The package will be automatically downloaded and run when your AI platform starts.
 
 ---
 
 ## 📦 One-Click Install
 
-Choose your AI platform and copy the configuration. Replace `/path/to/ai-usage-metrics-mcp` with your actual installation path.
+Choose your AI platform and copy the configuration.
 
 ### Claude Desktop
 
@@ -99,8 +106,8 @@ Choose your AI platform and copy the configuration. Replace `/path/to/ai-usage-m
 {
   "mcpServers": {
     "ai-usage-metrics": {
-      "command": "node",
-      "args": ["/path/to/ai-usage-metrics-mcp/dist/index.js"]
+      "command": "npx",
+      "args": ["-y", "ai-usage-metrics-mcp"]
     }
   }
 }
@@ -108,16 +115,14 @@ Choose your AI platform and copy the configuration. Replace `/path/to/ai-usage-m
 
 **One-liner setup:**
 ```bash
-# Create config directory if needed
 mkdir -p ~/Library/Application\ Support/Claude
 
-# Add MCP server (creates or updates config)
 cat > ~/Library/Application\ Support/Claude/claude_desktop_config.json << 'EOF'
 {
   "mcpServers": {
     "ai-usage-metrics": {
-      "command": "node",
-      "args": ["$HOME/ai-usage-metrics-mcp/dist/index.js"]
+      "command": "npx",
+      "args": ["-y", "ai-usage-metrics-mcp"]
     }
   }
 }
@@ -135,8 +140,8 @@ EOF
 {
   "mcpServers": {
     "ai-usage-metrics": {
-      "command": "node",
-      "args": ["C:\\path\\to\\ai-usage-metrics-mcp\\dist\\index.js"]
+      "command": "npx",
+      "args": ["-y", "ai-usage-metrics-mcp"]
     }
   }
 }
@@ -144,16 +149,14 @@ EOF
 
 **PowerShell one-liner:**
 ```powershell
-# Create config directory if needed
 New-Item -ItemType Directory -Force -Path "$env:APPDATA\Claude"
 
-# Create config file
 @'
 {
   "mcpServers": {
     "ai-usage-metrics": {
-      "command": "node",
-      "args": ["C:\\ai-usage-metrics-mcp\\dist\\index.js"]
+      "command": "npx",
+      "args": ["-y", "ai-usage-metrics-mcp"]
     }
   }
 }
@@ -171,8 +174,8 @@ New-Item -ItemType Directory -Force -Path "$env:APPDATA\Claude"
 {
   "mcpServers": {
     "ai-usage-metrics": {
-      "command": "node",
-      "args": ["/path/to/ai-usage-metrics-mcp/dist/index.js"]
+      "command": "npx",
+      "args": ["-y", "ai-usage-metrics-mcp"]
     }
   }
 }
@@ -185,8 +188,8 @@ cat > ~/.config/Claude/claude_desktop_config.json << 'EOF'
 {
   "mcpServers": {
     "ai-usage-metrics": {
-      "command": "node",
-      "args": ["$HOME/ai-usage-metrics-mcp/dist/index.js"]
+      "command": "npx",
+      "args": ["-y", "ai-usage-metrics-mcp"]
     }
   }
 }
@@ -199,45 +202,27 @@ EOF
 
 ### Claude Code CLI
 
-**Config file:** `~/.claude/settings.json`
+**Recommended: Use the Claude Code command:**
+```bash
+claude mcp add ai-usage-metrics -- npx -y ai-usage-metrics-mcp
+```
+
+**Or manually edit** `~/.claude/settings.json`:
 
 ```json
 {
   "mcpServers": {
     "ai-usage-metrics": {
-      "command": "node",
-      "args": ["/path/to/ai-usage-metrics-mcp/dist/index.js"]
+      "command": "npx",
+      "args": ["-y", "ai-usage-metrics-mcp"]
     }
   }
 }
-```
-
-**One-liner setup:**
-```bash
-mkdir -p ~/.claude
-cat > ~/.claude/settings.json << 'EOF'
-{
-  "mcpServers": {
-    "ai-usage-metrics": {
-      "command": "node",
-      "args": ["$HOME/ai-usage-metrics-mcp/dist/index.js"]
-    }
-  }
-}
-EOF
-```
-
-**Or use the Claude Code command:**
-```bash
-claude mcp add ai-usage-metrics node /path/to/ai-usage-metrics-mcp/dist/index.js
 ```
 
 ---
 
 ### Cursor
-
-<details>
-<summary><strong>Global Configuration</strong> — Click to expand</summary>
 
 **Config file:** `~/.cursor/mcp.json`
 
@@ -245,8 +230,8 @@ claude mcp add ai-usage-metrics node /path/to/ai-usage-metrics-mcp/dist/index.js
 {
   "mcpServers": {
     "ai-usage-metrics": {
-      "command": "node",
-      "args": ["/path/to/ai-usage-metrics-mcp/dist/index.js"]
+      "command": "npx",
+      "args": ["-y", "ai-usage-metrics-mcp"]
     }
   }
 }
@@ -259,54 +244,13 @@ cat > ~/.cursor/mcp.json << 'EOF'
 {
   "mcpServers": {
     "ai-usage-metrics": {
-      "command": "node",
-      "args": ["$HOME/ai-usage-metrics-mcp/dist/index.js"]
+      "command": "npx",
+      "args": ["-y", "ai-usage-metrics-mcp"]
     }
   }
 }
 EOF
 ```
-
-</details>
-
-<details>
-<summary><strong>Project-Specific Configuration</strong> — Click to expand</summary>
-
-**Config file:** `.cursor/mcp.json` (in your project root)
-
-```json
-{
-  "mcpServers": {
-    "ai-usage-metrics": {
-      "command": "node",
-      "args": ["/path/to/ai-usage-metrics-mcp/dist/index.js"]
-    }
-  }
-}
-```
-
-</details>
-
-<details>
-<summary><strong>Via Cursor Settings UI</strong> — Click to expand</summary>
-
-1. Open Cursor Settings (`Cmd+,` / `Ctrl+,`)
-2. Search for "MCP"
-3. Click "Edit in settings.json"
-4. Add the server configuration:
-
-```json
-{
-  "mcp.servers": {
-    "ai-usage-metrics": {
-      "command": "node",
-      "args": ["/path/to/ai-usage-metrics-mcp/dist/index.js"]
-    }
-  }
-}
-```
-
-</details>
 
 ---
 
@@ -318,8 +262,8 @@ EOF
 {
   "mcpServers": {
     "ai-usage-metrics": {
-      "command": "node",
-      "args": ["/path/to/ai-usage-metrics-mcp/dist/index.js"]
+      "command": "npx",
+      "args": ["-y", "ai-usage-metrics-mcp"]
     }
   }
 }
@@ -332,26 +276,13 @@ cat > ~/.codeium/windsurf/mcp_config.json << 'EOF'
 {
   "mcpServers": {
     "ai-usage-metrics": {
-      "command": "node",
-      "args": ["$HOME/ai-usage-metrics-mcp/dist/index.js"]
+      "command": "npx",
+      "args": ["-y", "ai-usage-metrics-mcp"]
     }
   }
 }
 EOF
 ```
-
-<details>
-<summary><strong>Via Windsurf UI</strong> — Click to expand</summary>
-
-1. Open Windsurf
-2. Navigate to **Cascade** → **Settings** (hammer icon)
-3. Click **"Add Server"** or **"Configure"**
-4. Add the server with:
-   - **Name:** `ai-usage-metrics`
-   - **Command:** `node`
-   - **Args:** `/path/to/ai-usage-metrics-mcp/dist/index.js`
-
-</details>
 
 ---
 
@@ -366,59 +297,14 @@ EOF
       {
         "transport": {
           "type": "stdio",
-          "command": "node",
-          "args": ["/path/to/ai-usage-metrics-mcp/dist/index.js"]
+          "command": "npx",
+          "args": ["-y", "ai-usage-metrics-mcp"]
         }
       }
     ]
   }
 }
 ```
-
-**One-liner setup:**
-```bash
-mkdir -p ~/.continue
-
-# If config.json doesn't exist, create it
-cat > ~/.continue/config.json << 'EOF'
-{
-  "experimental": {
-    "modelContextProtocolServers": [
-      {
-        "transport": {
-          "type": "stdio",
-          "command": "node",
-          "args": ["$HOME/ai-usage-metrics-mcp/dist/index.js"]
-        }
-      }
-    ]
-  }
-}
-EOF
-```
-
-<details>
-<summary><strong>Project-Specific Configuration</strong> — Click to expand</summary>
-
-Create `.continue/config.json` in your project root:
-
-```json
-{
-  "experimental": {
-    "modelContextProtocolServers": [
-      {
-        "transport": {
-          "type": "stdio",
-          "command": "node",
-          "args": ["./node_modules/ai-usage-metrics-mcp/dist/index.js"]
-        }
-      }
-    ]
-  }
-}
-```
-
-</details>
 
 ---
 
@@ -430,27 +316,13 @@ Create `.continue/config.json` in your project root:
 {
   "cline.mcpServers": {
     "ai-usage-metrics": {
-      "command": "node",
-      "args": ["/path/to/ai-usage-metrics-mcp/dist/index.js"],
+      "command": "npx",
+      "args": ["-y", "ai-usage-metrics-mcp"],
       "disabled": false
     }
   }
 }
 ```
-
-<details>
-<summary><strong>Via Cline Extension UI</strong> — Click to expand</summary>
-
-1. Open VS Code
-2. Click the Cline icon in the sidebar
-3. Click the **MCP Servers** icon (server stack)
-4. Click **"Add MCP Server"**
-5. Select **"Local (stdio)"**
-6. Enter the configuration:
-   - **Name:** `ai-usage-metrics`
-   - **Command:** `node /path/to/ai-usage-metrics-mcp/dist/index.js`
-
-</details>
 
 ---
 
@@ -463,29 +335,12 @@ Create `.continue/config.json` in your project root:
   "context_servers": {
     "ai-usage-metrics": {
       "command": {
-        "path": "node",
-        "args": ["/path/to/ai-usage-metrics-mcp/dist/index.js"]
+        "path": "npx",
+        "args": ["-y", "ai-usage-metrics-mcp"]
       }
     }
   }
 }
-```
-
-**One-liner setup:**
-```bash
-# Note: Merge with existing settings if you have other configurations
-cat > ~/.config/zed/settings.json << 'EOF'
-{
-  "context_servers": {
-    "ai-usage-metrics": {
-      "command": {
-        "path": "node",
-        "args": ["$HOME/ai-usage-metrics-mcp/dist/index.js"]
-      }
-    }
-  }
-}
-EOF
 ```
 
 ---
@@ -497,8 +352,8 @@ For any MCP-compatible platform, use these standard connection details:
 | Setting | Value |
 |---------|-------|
 | **Transport** | `stdio` |
-| **Command** | `node` |
-| **Arguments** | `/path/to/ai-usage-metrics-mcp/dist/index.js` |
+| **Command** | `npx` |
+| **Arguments** | `["-y", "ai-usage-metrics-mcp"]` |
 | **Server Name** | `ai-usage-metrics` |
 
 **Generic MCP Configuration:**
@@ -506,8 +361,8 @@ For any MCP-compatible platform, use these standard connection details:
 {
   "name": "ai-usage-metrics",
   "transport": "stdio",
-  "command": "node",
-  "args": ["/path/to/ai-usage-metrics-mcp/dist/index.js"]
+  "command": "npx",
+  "args": ["-y", "ai-usage-metrics-mcp"]
 }
 ```
 
@@ -515,17 +370,22 @@ For any MCP-compatible platform, use these standard connection details:
 
 ## Manual Installation
 
-### Prerequisites
+For most users, the npx method above is recommended. Manual installation is useful for development or if you prefer a global install.
 
-- Node.js 18.0.0 or higher
-- npm, pnpm, or yarn
+### Global Install via npm
 
-### From Source
+```bash
+npm install -g ai-usage-metrics-mcp
+```
+
+Then use `ai-usage-metrics-mcp` as the command in your MCP config instead of `npx`.
+
+### From Source (for development)
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-org/ai-usage-metrics-mcp.git
-cd ai-usage-metrics-mcp
+git clone https://github.com/charlie-818/ai-history-mcp.git
+cd ai-history-mcp
 
 # Install dependencies
 npm install
@@ -533,7 +393,7 @@ npm install
 # Build the project
 npm run build
 
-# Verify installation
+# Run the server
 npm start
 ```
 
@@ -1169,9 +1029,9 @@ Contributions are welcome! Please:
 
 ## Support
 
-- **Issues**: Report bugs and request features via [GitHub Issues](https://github.com/your-org/ai-usage-metrics-mcp/issues)
+- **Issues**: Report bugs and request features via [GitHub Issues](https://github.com/charlie-818/ai-history-mcp/issues)
 - **Documentation**: See the [MCP specification](https://modelcontextprotocol.io/)
-- **Discussions**: Join the conversation on [GitHub Discussions](https://github.com/your-org/ai-usage-metrics-mcp/discussions)
+- **Discussions**: Join the conversation on [GitHub Discussions](https://github.com/charlie-818/ai-history-mcp/discussions)
 
 ---
 
