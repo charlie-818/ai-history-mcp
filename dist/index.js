@@ -41,6 +41,9 @@ import { createResourceHandlers, resourceTemplates } from "./resources/index.js"
  * Initialize and start the MCP server
  */
 async function main() {
+    // Log the output file location on startup
+    const logPath = process.env.AI_USAGE_LOG_PATH || "./ai-usage.log";
+    console.error(`[ai-usage-metrics] Logging AI outputs to: ${logPath}`);
     // Initialize the metrics store
     // Replace InMemoryMetricsStore with a database-backed implementation for production
     const store = new InMemoryMetricsStore();

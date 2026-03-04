@@ -3,6 +3,7 @@
  * The MetricsStore interface allows swapping storage backends (in-memory, Postgres, etc.)
  */
 import { randomUUID } from "crypto";
+import { appendFileSync } from "fs";
 /**
  * In-memory implementation of MetricsStore.
  * Suitable for development and testing. Data is lost on restart.
@@ -11,6 +12,25 @@ import { randomUUID } from "crypto";
 export class InMemoryMetricsStore {
     calls = new Map();
     sessionIndex = new Map();
+    /**
+     * Log model call output to a file for persistent history.
+     */
+    logToFile(call) {
+        const logPath = process.env.AI_USAGE_LOG_PATH || "./ai-usage.log";
+        const logEntry = {
+            timestamp: call.timestamp,
+            id: call.id,
+            project: call.project,
+            modelName: call.modelName,
+            outputMessages: call.outputMessages,
+        };
+        try {
+            appendFileSync(logPath, JSON.stringify(logEntry) + "\n");
+        }
+        catch (err) {
+            console.error("[ai-usage-metrics] Failed to write to log file:", err);
+        }
+    }
     async logCall(input) {
         const call = {
             ...input,
@@ -24,6 +44,8 @@ export class InMemoryMetricsStore {
             sessionCalls.add(call.id);
             this.sessionIndex.set(call.sessionId, sessionCalls);
         }
+        // Log the AI model output to file
+        this.logToFile(call);
         return call;
     }
     async getCall(id) {

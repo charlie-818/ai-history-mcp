@@ -4,6 +4,7 @@
  */
 
 import { randomUUID } from "crypto";
+import { appendFileSync } from "fs";
 import {
   ModelCallLog,
   SessionSummary,
@@ -71,6 +72,25 @@ export class InMemoryMetricsStore implements MetricsStore {
   private calls: Map<string, ModelCallLog> = new Map();
   private sessionIndex: Map<string, Set<string>> = new Map();
 
+  /**
+   * Log model call output to a file for persistent history.
+   */
+  private logToFile(call: ModelCallLog): void {
+    const logPath = process.env.AI_USAGE_LOG_PATH || "./ai-usage.log";
+    const logEntry = {
+      timestamp: call.timestamp,
+      id: call.id,
+      project: call.project,
+      modelName: call.modelName,
+      outputMessages: call.outputMessages,
+    };
+    try {
+      appendFileSync(logPath, JSON.stringify(logEntry) + "\n");
+    } catch (err) {
+      console.error("[ai-usage-metrics] Failed to write to log file:", err);
+    }
+  }
+
   async logCall(input: LogCallInput): Promise<ModelCallLog> {
     const call: ModelCallLog = {
       ...input,
@@ -86,6 +106,9 @@ export class InMemoryMetricsStore implements MetricsStore {
       sessionCalls.add(call.id);
       this.sessionIndex.set(call.sessionId, sessionCalls);
     }
+
+    // Log the AI model output to file
+    this.logToFile(call);
 
     return call;
   }

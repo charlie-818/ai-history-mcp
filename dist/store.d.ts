@@ -53,6 +53,10 @@ export interface MetricsStore {
 export declare class InMemoryMetricsStore implements MetricsStore {
     private calls;
     private sessionIndex;
+    /**
+     * Log model call output to a file for persistent history.
+     */
+    private logToFile;
     logCall(input: LogCallInput): Promise<ModelCallLog>;
     getCall(id: string): Promise<ModelCallLog | null>;
     searchCalls(params: SearchCallsParams): Promise<ModelCallLog[]>;
